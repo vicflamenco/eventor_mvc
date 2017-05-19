@@ -1,0 +1,80 @@
+﻿@model List<Eventor.Models.App.ParticipanteSeleccionado>
+
+@{
+    ViewBag.Title = "Importar Contactos";
+}
+
+@using(Html.BeginForm("InvitarContactos","Participantes",FormMethod.Post, null))
+{
+    <br />
+    <div class="well">
+        <div class="row">
+            <div class="col-md-6">
+                <h3><strong>Importar desde Gmail</strong></h3>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-lg pull-right">
+                    @if (Model != null)
+                    {
+                        <input type="submit" value="¡Invitar!" class="btn btn-lg btn-primary" />
+                    }
+                    @Html.ActionLink("Volver", "Index", "Participantes", new { @class = "btn btn-default" })
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <br />
+
+    <table class="table table-hover table-bordered">
+        <tr>
+            <th>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="chkSelectAll" checked />Seleccionar todos
+                    </label>
+                </div>
+                
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Correo
+            </th>
+        </tr>
+
+        @if(Model != null)
+        {
+            for (int x = 0; x < Model.Count(); x++)
+            {
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            @Html.CheckBox("[" + x + "].Seleccionado", @Model[x].Seleccionado) Importar
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" value="@Model[x].Participante.Nombre" name="[@x].Participante.Nombre" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="text" value="@Model[x].Participante.Correo" name="[@x].Participante.Correo" class="form-control" />
+
+                        <input type="hidden" value="@Model[x].Participante.EventoId" name="[@x].Participante.EventoId" />
+
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td class="danger text-center" colspan="3">
+                    No se pudo obtener permisos para importar los contactos. Intente nuevamente.
+                </td>
+            </tr>
+        }
+
+    </table>   
+}

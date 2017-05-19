@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Eventor.Models.App.Entrada>
+@using Eventor.Models;
+@{
+    ViewBag.Title = "Comprar entradas";
+    
+}
+
+<br />
+<div class="well">
+    <div class="row">
+        <div class="col-md-8">
+            <h3><strong>@ViewBag.NombreEvento - Comprar entradas</strong></h3>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group btn-group-lg pull-right">
+                @Html.ActionLink("Volver", "Details","Eventos", new { @id = ViewContext.RouteData.Values["id"] }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    @if(Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-md-4 col-xs-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h4 class="panel-title"><strong>@Html.DisplayFor(modelItem => item.Nombre)</strong></h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <h4 class="panel-title"><strong>@Html.DisplayFor(modelItem => item.Precio)</strong></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+
+                        <p><strong>Cupo:</strong> @Html.DisplayFor(modelItem => item.Cupo) personas</p>
+                        <p><strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.Descripcion)</p>
+
+
+                    </div>
+                    <div class="panel-footer">
+
+                        @if ((bool)ViewBag.Finalizado)
+                        {
+                            <input type="button" value="Añadir al carrito" class="btn btn-success" disabled/>
+                        }
+                        else
+                        {
+                            <a href="#"
+                               class="btn btn-success AddCart"
+                               @*data-toggle="modal"
+                               data-target="#myModal"*@
+                               data-preciounitario="@Html.DisplayFor(modelItem => item.Precio)"
+                               data-ventamax="@Html.DisplayFor(modelItem => item.CantidadMaxima)"
+                               data-ventamin="@Html.DisplayFor(modelItem => item.CantidadMinima)"
+                               data-entradaid="@Html.DisplayFor(modelItem => item.EntradaId)"
+                               data-url="@Url.Action("AddItemToCart","Items")">
+                                Añadir al carrito
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            No existen entradas para este evento aún
+        </div>
+    }
+
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Seleccione la cantidad de entradas</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline" role="form">
+                    <label for="Cantidad">Cantidad de entradas:</label>
+                    <div class="form-group">
+                        <select id="Cantidad" class="form-control"></select>
+                    </div>
+                </form>
+                <p class="text-right">
+                    <strong>Precio unitario: </strong><label id="PrecioUnitario"></label>
+                </p>
+                <hr />
+                <p class="text-right">
+                    <strong>Subtotal: </strong><label id="Subtotal"></label>
+                </p>
+                
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" id="btnAgregarAlCarrito">
+                        Agregar al carrito
+                        <img src="~/Content/img/ajax-loader.gif" id="ImgLoader" width="16" height="16" hidden />
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/AddToCart")
+}

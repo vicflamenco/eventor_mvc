@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Eventor.Models.App.Pedido>
+
+@{
+    ViewBag.Title = "Compras";
+}
+
+<br />
+<div class="well well-lg">
+    <div class="row">
+        <div class="col-md-12">
+            <h3><strong>Mis compras</strong></h3>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            No.
+        </th>
+        <th>
+            Fecha y Hora
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            Detalles
+        </th>
+    </tr>
+
+@if (Model.Any())
+{
+    int x = 1;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @x
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaHora)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td class="text-center">
+                @Html.ActionLink("Detalles", "Details", new { id = item.PedidoId }, new { @class="btn btn-primary" })
+            </td>
+        </tr>
+        x++;
+    }
+}
+else
+{
+    <tr class="warning">
+        <td class="text-center" colspan="3">
+            Aún no has realizado ninguna compra
+        </td>
+    </tr>
+}
+
+</table>

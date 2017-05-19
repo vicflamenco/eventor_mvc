@@ -1,0 +1,77 @@
+﻿@model Eventor.Models.App.Participante
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <br />
+
+        <div class="well">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3><strong>Editar participante</strong></h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="btn-group btn-group-lg pull-right">
+                        <input type="submit" value="Actualizar" class="btn btn-lg btn-primary" />
+                        @Html.ActionLink("Volver", "Index", new { @id = Model.EventoId }, new { @class = "btn btn-default" })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        @Html.HiddenFor(model => model.ParticipanteId)
+        @Html.Hidden("EventoId", (int)ViewBag.EventoId)
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Información Participante<span class="glyphicon glyphicon-user pull-right"></span></h4>
+                </div>
+                <div class="panel-body">
+
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(model => model.Estado, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

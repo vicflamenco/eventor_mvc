@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="eventor" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Víctor\\documents\\visual\ studio\ 2013\\Projects\\Eventor\\Eventor\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Víctor\\documents\\visual\ studio\ 2013\\Projects\\Eventor\\Eventor\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="ApplicationDb-Web.config Connection String" description="" value="Data Source=mssql2.gear.host;Initial Catalog=identitydb;User ID=identitydb;Password=Iv49!6!phS5o" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Víctor\\documents\\visual\ studio\ 2013\\Projects\\Eventor\\Eventor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ApplicationDb']/@connectionString" />
+  </parameter>
+  <parameter name="EventorDb-Web.config Connection String" description="" value="Data Source=mssql2.gear.host;Initial Catalog=eventordb;User ID=eventordb;Password=Cd3N0!ep~d9F" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Víctor\\documents\\visual\ studio\ 2013\\Projects\\Eventor\\Eventor\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EventorDb']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Eventor.Models.App.Evento>
+
+@{
+    ViewBag.Title = "Explorar";
+}
+
+<br />
+<div class="well well-lg">
+    <div class="row">
+        <div class="col-md-10">
+            <h3><span class="glyphicon glyphicon-search" style="display: inline;"></span><strong> Explorar eventos</strong></h3>
+        </div>
+    </div>
+</div>
+
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3>
+                Próximos Eventos <span class="label label-success">@(((List<Eventor.Models.App.Evento>)ViewBag.ProximosEventos).Count)</span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                @if (((List<Eventor.Models.App.Evento>)ViewBag.ProximosEventos).Count > 0)
+                {
+                    foreach (Eventor.Models.App.Evento evento in (List<Eventor.Models.App.Evento>)ViewBag.ProximosEventos)
+                    {
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="text-success">
+                                        <strong>@evento.Nombre</strong>
+                                        @if (evento.Acceso == Eventor.Models.App.Acceso.Publico)
+                                        {
+                                            <span class="glyphicon glyphicon-globe pull-right"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="glyphicon glyphicon-lock pull-right"></span>
+                                        }
+                                    </h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p><strong>Inicio: </strong>@evento.Inicio</p>
+                                    <p><strong>Final: </strong>@evento.Final</p>
+                                    <p><strong>Ubicación: </strong>@evento.Lugar</p>
+                                </div>
+                                <div class="panel-footer">
+                                    @Html.ActionLink("Detalles", "Details", "Eventos", new { @id = evento.EventoId }, new { @class = "btn btn-success" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-success text-center">No hay eventos próximos.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3>
+            Eventos Históricos <span class="label label-warning">@(((List<Eventor.Models.App.Evento>)ViewBag.EventosHistoricos).Count)</span>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            @if (((List<Eventor.Models.App.Evento>)ViewBag.EventosHistoricos).Count > 0)
+            {
+                foreach (Eventor.Models.App.Evento evento in (List<Eventor.Models.App.Evento>)ViewBag.EventosHistoricos)
+                {
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="text-warning">
+                                    <strong>@evento.Nombre</strong>
+                                    @if (evento.Acceso == Eventor.Models.App.Acceso.Publico)
+                                    {
+                                        <span class="glyphicon glyphicon-globe pull-right"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-lock pull-right"></span>
+                                    }
+                                </h4>
+
+                            </div>
+                            <div class="panel-body">
+                                <p><strong>Inicio: </strong>@evento.Inicio</p>
+                                <p><strong>Final: </strong>@evento.Final</p>
+                                <p><strong>Ubicación: </strong>@evento.Lugar</p>
+                            </div>
+                            <div class="panel-footer">
+                                @Html.ActionLink("Detalles", "Details", "Eventos", new { @id = evento.EventoId }, new { @class = "btn btn-warning" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="text-warning text-center">No hay eventos históricos.</p>
+            }
+        </div>
+    </div>
+</div>

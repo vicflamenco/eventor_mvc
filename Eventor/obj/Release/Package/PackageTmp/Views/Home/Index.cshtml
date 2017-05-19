@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Eventor";
+}
+
+<div class="container-full">
+
+    <div class="row">
+
+        <div class="col-lg-12 text-center v-center">
+
+            <h1>Eventor</h1>
+            <p class="lead">Tus eventos donde quieras</p>
+
+            <br>
+            <form class="col-lg-12">
+                <div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
+                    @if (User.IsInRole("Organizador"))
+                    {
+                        @Html.ActionLink("Mis Eventos", "Index", "Eventos", null, new { @class="btn btn-primary btn-lg" })
+                     }
+                    else if (User.IsInRole("Participante"))
+                    {
+                        @Html.ActionLink("Mis Eventos", "Explorar", "Eventos", null, new { @class = "btn btn-primary btn-lg" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Comenzar a explorar", "Explorar", "Eventos", null, new { @class = "btn btn-primary btn-lg" })
+                    }
+                    
+                </div>
+            </form>
+        </div>
+
+    </div> <!-- /row -->
+    <br/><br /><br />
+</div> <!-- /container full -->
+
+<div class="container">
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Lanza tu evento</h3></div>
+                <div class="panel-body">
+                    Con Eventor tu puedes configurar tus eventos públicos y privados. Vende tus entradas y obtén
+                    datos estadísticos relevantes acerca de tu evento.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Invita a todos</h3></div>
+                <div class="panel-body">
+                    Eventor es la aplicación más sencilla para invitar a tus amigos, colegas, compañeros, familiares a
+                    tus reuniones. ¿Qué esperas para probarlo?
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>Administra tu evento</h3></div>
+                <div class="panel-body">
+                    Con Eventor tú tienes la posibilidad de administrar tu evento. Un par de clics lograrán resultados
+                    que jamás pensaste.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

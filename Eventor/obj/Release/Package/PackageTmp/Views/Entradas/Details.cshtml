@@ -1,0 +1,94 @@
+﻿@model Eventor.Models.App.Entrada
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<br />
+<div class="well">
+    <div class="row">
+        <div class="col-md-8">
+            <h3><strong>@ViewBag.NombreEvento <small>- @Model.Nombre</small></strong></h3>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group btn-group-lg pull-right">
+                @if (User.IsInRole("Organizador"))
+                {
+                    @Html.ActionLink("Editar", "Edit", new { @id = ViewContext.RouteData.Values["id"] }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Volver", "Index", new { @id = @Model.EventoId }, new { @class = "btn btn-default" })
+                }
+                else if (User.IsInRole("Participante"))
+                {
+                    @Html.ActionLink("Volver", "Explorar", new { @id = @Model.EventoId }, new { @class = "btn btn-default" })
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Información General<span class="glyphicon glyphicon-list pull-right"></span></h4>
+        </div>
+        <div class="panel-body">
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Precio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Precio)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Cupo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Cupo)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.CantidadMinima)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CantidadMinima)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.CantidadMaxima)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CantidadMaxima)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
+
+            </dl>
+
+        </div>
+    </div>
+</div>

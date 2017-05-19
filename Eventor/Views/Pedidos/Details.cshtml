@@ -1,0 +1,89 @@
+﻿@model Eventor.Models.App.Pedido
+@using Eventor.Models.App
+
+@{
+    ViewBag.Title = "Detalles de la compra";
+}
+
+<br />
+<div class="well well-lg">
+    <div class="row">
+        <div class="col-md-6">
+            <h3><strong>Detalles de la compra</strong></h3>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group btn-group-lg pull-right" role="group" aria-label="...">
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+     </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <div class="col-md-6 text-center">
+                    <h3 class="text-primary">Fecha: @Html.DisplayFor(model => model.FechaHora)</h3>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h3 class="text-success">Total: $@Html.DisplayFor(model => model.Total)</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            Cantidad
+        </th>
+        <th>
+            Entrada
+        </th>
+        <th>
+            Evento
+        </th>
+        <th>
+            Precio unitario
+        </th>
+        
+        <th>
+            Subtotal
+        </th>
+    </tr>
+
+    @if (((List<Item>)ViewBag.Items).Any())
+    {
+        foreach (var item in (List<Item>)ViewBag.Items)
+        {
+            <tr class="success">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Entrada.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Entrada.Evento.Nombre)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                
+                <td>
+                    $@Html.DisplayFor(modelItem => item.Subtotal)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td class="warning text-center" colspan="5">No se encontraron items para esta compra</td>
+        </tr>
+    }
+
+</table>

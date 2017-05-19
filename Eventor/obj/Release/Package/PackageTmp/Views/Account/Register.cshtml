@@ -1,0 +1,79 @@
+﻿@model Eventor.Models.Identity.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+
+<br />
+<div class="well well-lg">
+    <div class="row">
+        <div class="col-md-6">
+            <h3><strong>Registrarse en Eventor</strong></h3>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group btn-group-lg pull-right" role="group" aria-label="...">
+                @Html.ActionLink("Ya soy miembro", "Login", "Account", null, new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Cree una nueva cuenta</h3>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Rol" class="col-md-2 control-label">
+                    Registrarme como
+                </label>
+
+                       @*@Html.LabelFor(m => m.Rol, new { @class = "col-md-2 control-label" })*@
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.Rol, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Crear cuenta" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

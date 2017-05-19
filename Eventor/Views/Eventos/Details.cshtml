@@ -1,0 +1,183 @@
+﻿@model Eventor.Models.App.Evento
+
+@{
+    ViewBag.Title = "Detalles del evento";
+}
+<br />
+<div class="well well-lg">
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <h3><strong>@Model.Nombre - Dashboard</strong></h3>
+        </div>
+        <div class="col-md-6">
+            <div class="btn-group btn-group-lg pull-right" role="group" aria-label="...">
+                @if (User.IsInRole("Organizador"))
+                {
+                    @Html.ActionLink("Entradas", "Index", "Entradas", new { id = Model.EventoId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Participantes", "Index", "Participantes", new { id = Model.EventoId }, new { @class = "btn btn-primary" })
+                    
+                    if(!(bool)ViewBag.Finalizado)
+                    {
+                        @Html.ActionLink("Configurar", "Edit", new { id = Model.EventoId }, new { @class = "btn btn-default" })
+                    }
+
+                    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-default" })
+                }
+                else if (User.IsInRole("Participante"))
+                {
+                    @Html.ActionLink("Entradas", "Index", "Entradas", new { id = Model.EventoId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Participantes", "Index", "Participantes", new { id = Model.EventoId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Volver", "Explorar", null, new { @class = "btn btn-default" })
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel @((bool)ViewBag.Finalizado ? "panel-warning" : "panel-info")">
+            <div class="panel-heading">
+                <h4>Estado: @((bool)ViewBag.Finalizado ? "Finalizado" : "Por celebrar")<span class="glyphicon glyphicon-wrench pull-right"></span></h4>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-4 text-center">
+                    <h3 class="text-primary">@ViewBag.Invitados Invitado(s)</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-success">@ViewBag.Confirmados Confirmado(s)</h3>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-danger">@ViewBag.Cancelados Cancelado(s)</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (User.IsInRole("Organizador"))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4>Ventas<span class="glyphicon glyphicon-usd pull-right"></span></h4>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-6 text-center">
+                        <h3 class="text-success">Entradas vendidas: @ViewBag.EntradasVendidas</h3>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <h3 class="text-success">Ingresos: $@ViewBag.Ingresos</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Información General<span class="glyphicon glyphicon-list pull-right"></span></h4>
+            </div>
+            <div class="panel-body">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Lugar)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Lugar)
+                    </dd>
+                    <hr />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Organizador)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Organizador)
+                    </dd>
+                    <hr />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Inicio)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Inicio)
+                    </dd>
+                    <hr />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Final)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Final)
+                    </dd>
+
+                </dl>
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Detalles<span class="glyphicon glyphicon-info-sign pull-right"></span></h4>
+            </div>
+            <div class="panel-body">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Acceso)
+                    </dt>
+
+                    <dd>
+                        Este evento es @Html.DisplayFor(model => model.Acceso)
+                    </dd>
+                    <hr />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Información de Contacto<span class="glyphicon glyphicon-user pull-right"></span></h4>
+            </div>
+            <div class="panel-body">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Contacto.Nombre) 
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Contacto.Nombre) @Html.DisplayFor(model => model.Contacto.Apellido)
+                    </dd>
+                    <hr />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Contacto.Teléfono)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Contacto.Teléfono)
+                    </dd>
+                    <hr />
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Contacto.Correo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Contacto.Correo)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

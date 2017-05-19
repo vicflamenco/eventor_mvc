@@ -1,0 +1,168 @@
+﻿@model IEnumerable<Eventor.Models.App.Participante>
+
+@{
+    ViewBag.Title = "Participantes";
+}
+
+<br />
+
+<div class="well well-lg">
+    <div class="row">
+        <div class="col-md-8">
+            <h3><strong>@ViewBag.NombreEvento</strong></h3>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group pull-right">
+                @if (User.IsInRole("Organizador") && !(bool)ViewBag.Finalizado)
+                {
+                    @Html.ActionLink("Invitar", "Create", new { @id = Session["EventoId"] }, new { @class = "btn btn-lg btn-primary" })
+                    <div class="btn-group btn-group-lg" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Importar
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                @Html.ActionLink("Desde Gmail", "Autorizar", null, new { @class = "btn btn-lg" })
+                            </li>
+                        </ul>
+                    </div>
+                }      
+                @Html.ActionLink("Volver", "Details", "Eventos", new { @id = Session["EventoId"] }, new { @class = "btn btn-lg btn-default" })
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+
+<div class="row">
+    @using (Html.BeginForm("Index", "Participantes", FormMethod.Get, new { @class = "pull-right", @role = "form" }))
+    {
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">
+                            <span class="glyphicon glyphicon-search">
+
+                            </span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="Participante" placeholder="Participante">
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<br />
+
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            Nombre completo
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Correo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        @if (User.IsInRole("Organizador") && !(bool)ViewBag.Finalizado)
+        {
+            <th>Acciones</th>
+        }
+        
+    </tr>
+
+    @if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+
+            <tr class="@((item.Estado.ToString()=="Confirmado") ? "success" : ((item.Estado.ToString() == "Invitado") ? "default" : "danger"))">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Correo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+
+                @if (User.IsInRole("Organizador") && !(bool)ViewBag.Finalizado)
+                {
+                    <td class="text-center">
+                        <div class="btn-group">
+                            @Html.ActionLink("Editar", "Edit", new { @id = item.ParticipanteId }, new { @class = "btn btn-default" })
+
+                            @{
+                                if (item.Estado.ToString() == "Invitado")
+                                {
+                                    <button type="button"
+                                            id="btnReenviar"
+                                            class="btn btn-default btnReenviar"
+                                            data-url="@Url.Action("SendEmail","Participantes")"
+                                            data-participanteid="@item.ParticipanteId"
+                                            data-correo="@item.Correo"
+                                            data-nombre="@item.Nombre"
+                                            data-eventoid="@item.EventoId">
+                                        Reenviar
+                                        <img id="ImagenCargando_@item.ParticipanteId" src="~/Content/img/ajax-loader.gif" hidden width="16" height="16" />
+                                    </button>
+                                            @Html.ActionLink("Quitar", "Delete", new { @id = item.ParticipanteId }, new { @class = "btn btn-default" })
+                                }
+                                else
+                                {
+                                    <button disabled type="button" id="btnReenviar" class="btn btn-default btnReenviar">
+                                        Reenviar
+                                    </button>
+                                            @Html.ActionLink("Quitar", "Delete", new { @id = item.ParticipanteId }, new { @class = "btn btn-default", @disabled = "true" })
+                                }
+                            }
+                        </div>
+                    </td>
+                }
+            </tr>
+        }
+    }
+    else
+    {
+        <tr class="warning">
+            <td class="text-center" colspan="4">
+                Aún no hay participantes invitados
+            </td>
+        </tr>
+    }
+
+    
+
+</table>
+
+
+<div id="modalReenviar" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Reenviar invitación</h3>
+            </div>
+            <div class="modal-body">
+                <p id="txtContenido"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/ReenviarEmail")
+}

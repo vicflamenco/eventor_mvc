@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Confirmar";
+}
+
+<br />
+
+<div class="jumbotron">
+    <h2>
+        ¡@ViewBag.NombreParticipante, tu asistencia a @ViewBag.NombreEvento ha sido cancelada!
+    </h2>
+    <h2>Esperamos que puedas acompañarnos en nuestros próximos eventos</h2>
+        <br />
+    @Html.ActionLink("Ver Evento", "Details", "Eventos", new { @id = ViewBag.EventoId }, new { @class = "btn btn-primary btn-lg" })
+</div>

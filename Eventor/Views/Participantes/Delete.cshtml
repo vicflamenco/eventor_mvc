@@ -1,0 +1,65 @@
+﻿@model Eventor.Models.App.Participante
+
+@{
+    ViewBag.Title = "Delete";
+}
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="well">
+        <div class="row">
+            <div class="col-md-6">
+                <h3><strong>@ViewBag.NombreEvento - Quitar invitación</strong></h3>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-lg pull-right">
+                    <input type="submit" value="Quitar" class="btn btn-lg btn-danger" />
+                    @Html.ActionLink("Volver", "Index", new { @id = Model.EventoId }, new { @class = "btn btn-default" })
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>¿Desea quitar invitación al siguiente participante?<span class="glyphicon glyphicon-user pull-right"></span></h4>
+        </div>
+        <div class="panel-body">
+
+            <dl class="dl-horizontal">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Correo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Correo)
+                </dd>
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+
+            </dl>
+
+        </div>
+    </div>
+</div>

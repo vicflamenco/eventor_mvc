@@ -1,0 +1,26 @@
+﻿<h2>Invitacion</h2>
+
+
+<div style="text-align: center;">
+    <h1>¡Hola @ViewBag.NombreParticipante!</h1>
+    <h2>Estás invitado a @ViewBag.NombreEvento</h2>
+    <p>
+        Saludos @ViewBag.NombreParticipante, el equipo de Eventor te invita
+        cordialmente al evento <strong>@ViewBag.NombreEvento</strong>, organizado
+        por @ViewBag.Organizador, que se llevará a cabo en @ViewBag.Ubicacion.
+    </p>
+
+    <p>
+        <a href="@ViewBag.UrlEvento">Ver detalles del evento</a>
+    </p>
+
+    <p>
+        Haz click <a href="@ViewBag.UrlConfirmar">aquí</a> para confirmar tu asistencia.
+        O haz clic <a href="@ViewBag.UrlCancelar">aquí</a> para cancelar tu asistencia.
+    </p>
+    
+    <p>
+        Si tienes preguntas acerca del evento, no dudes en contactar a la persona de contacto: @ViewBag.Contacto (@ViewBag.Correo)
+    </p>
+        
+</div>
